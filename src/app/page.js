@@ -28,7 +28,7 @@ export default function Home() {
       setTemp(info.current.temp_c)
       setCityAndCountry(`${info.location.name}, ${info.location.country}`)
       const date = new Date(info.location.localtime)
-      setTime(date.toUTCString())
+      setTime(date.toLocaleString())
       setCondition(info.current.condition.text)
     })
   }
