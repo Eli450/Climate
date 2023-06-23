@@ -29,6 +29,6 @@ export default function Condition({condition}) {
          image = sunny
    }
    return (
-      <Image src={image}></Image>
+      <Image className='w-64' src={image}></Image>
    )
 }

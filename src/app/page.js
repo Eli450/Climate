@@ -34,7 +34,7 @@ export default function Home() {
 
     return (
     <main className="flex w-full min-h-screen flex-col items-center justify-between p-24 min-[280px]:p-[42px] ">
-          <div className='w-1/2 h-max bg-white rounded-md flex justify-center p-16 flex-col max-[1280]:w-1/2 min-[280px]:w-full' >
+          <div className='h-max bg-white rounded-md flex justify-center p-16 flex-col min-[1280]:w-1/2 min-[280px]:w-full' >
               { condition !== '' ? (<>
                 <div className={`${poppinsRegular.className}`}>
                       <span className={`block text-xl text-center font-medium ${poppinsBlack.className}`}>{cityAndCountry}</span>
