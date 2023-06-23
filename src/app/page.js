@@ -4,8 +4,8 @@ import { useState } from 'react'
 import Condition from '@/app/components/Condition'
 
 async function getWeather(city){
-  const response = await fetch (`https://api.weatherapi.com/v1/current.json?key=a4d22e340b0f41ed996184640231505&q=${city}&aqi=no`)
-
+  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+  const response = await fetch (`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&aqi=no`)
   if (response.status === 200){
      const {current, location} = await response.json()
      return {current, location}
@@ -23,19 +23,18 @@ export default function Home() {
 
   const onClick = (e) => {
     e.preventDefault();
-    console.log(city)
     getWeather(city).then(info => {
       setTemp(info.current.temp_c)
       setCityAndCountry(`${info.location.name}, ${info.location.country}`)
       const date = new Date(info.location.localtime)
-      setTime(date.toLocaleString())
+      setTime(date.toDateString())
       setCondition(info.current.condition.text)
     })
   }
 
     return (
-    <main className="flex w-full min-h-screen flex-col items-center justify-between p-24">
-          <div className='w-1/2 h-max bg-white rounded-md flex justify-center p-16 flex-col' >
+    <main className="flex w-full min-h-screen flex-col items-center justify-between p-24 min-[280px]:p-[42px] ">
+          <div className='w-1/2 h-max bg-white rounded-md flex justify-center p-16 flex-col max-[1280]:w-1/2 min-[280px]:w-full' >
               { condition !== '' ? (<>
                 <div className={`${poppinsRegular.className}`}>
                       <span className={`block text-xl text-center font-medium ${poppinsBlack.className}`}>{cityAndCountry}</span>
@@ -51,8 +50,8 @@ export default function Home() {
                   <p className='text-center pt-16'>Digite uma cidade ou país</p>
                 </div>
               </>) }
-              <div className={`flex justify-center pt-24`}>
-                  <form>
+              <div className={`flex justify-center pt-24 place-c`}>
+                  <form className='flex'>
                       <input value={city} onChange={(e) =>{setCity(e.target.value)}} className={`h-10 w-40 rounded-l-lg bg-neutral-100 p-4 focus:outline-gray-300`}type='text' name='' placeholder='Digite a Cidade' />
                       <button className={`bg-yellow-400 h-10 w-28 rounded-r-lg`} name='myInput' onClick={onClick}>Buscar</button>
                   </form>
