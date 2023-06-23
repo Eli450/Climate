@@ -18,5 +18,6 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: black;
+  background-image: url('../../public/fundo.png');
+  background-size: cover;
 }

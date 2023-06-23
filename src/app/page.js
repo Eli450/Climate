@@ -27,7 +27,7 @@ export default function Home() {
       setTemp(info.current.temp_c)
       setCityAndCountry(`${info.location.name}, ${info.location.country}`)
       const date = new Date(info.location.localtime)
-      setTime(date.toDateString())
+      setTime(date.toLocaleString())
       setCondition(info.current.condition.text)
     })
   }
@@ -40,8 +40,8 @@ export default function Home() {
                       <span className={`block text-xl text-center font-medium ${poppinsBlack.className}`}>{cityAndCountry}</span>
                       <span className='block pt-3 text-center text-gray-300'>{time}</span>
                     </div>
-                <div>
-                      <Condition condition={condition}></Condition>
+                <div className='mr-auto ml-auto text-center'>
+                      <Condition className='' condition={condition}></Condition>
                       <span className={`block text-6xl text-center font-lg pt-8 ${poppinsBlack.className}`}>{temp}ºC</span>
                       <span className='text-gray-300 text-center block'>{condition}</span>
                     </div>
