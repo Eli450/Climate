@@ -11,6 +11,7 @@ async function getWeather(city){
      return {current, location}
   } else {
       console.error(Error('Erro ao buscar a informação sobre o clima'))
+      return new Error("Erro ao buscar informação")
   }
 }
 
@@ -20,7 +21,8 @@ export default function Home() {
   const [cityAndCountry, setCityAndCountry] = useState('')
   const [time, setTime] = useState('')
   const [condition, setCondition] = useState('')
-
+  const [error, setError] = useState(undefined)
+ 
   const onClick = (e) => {
     e.preventDefault();
     getWeather(city).then(info => {
@@ -29,13 +31,15 @@ export default function Home() {
       const date = new Date(info.location.localtime)
       setTime(date.toLocaleString())
       setCondition(info.current.condition.text)
-    })
+    }).catch(error => {
+      setError(error)
+    }) 
   }
 
     return (
     <main className="flex w-full min-h-screen flex-col items-center justify-between p-24 min-[280px]:p-[42px] ">
           <div className='h-max bg-white rounded-md flex justify-center p-16 flex-col min-[1280]:w-1/2 min-[280px]:w-full' >
-              { condition !== '' ? (<>
+              { condition !== '' && error == undefined ? (<>
                 <div className={`${poppinsRegular.className}`}>
                       <span className={`block text-xl text-center font-medium ${poppinsBlack.className}`}>{cityAndCountry}</span>
                       <span className='block pt-3 text-center text-gray-300'>{time}</span>
@@ -55,6 +59,9 @@ export default function Home() {
                       <input value={city} onChange={(e) =>{setCity(e.target.value)}} className={`h-10 w-40 rounded-l-lg bg-neutral-100 p-4 focus:outline-gray-300`}type='text' name='' placeholder='Digite a Cidade' />
                       <button className={`bg-yellow-400 h-10 w-28 rounded-r-lg`} name='myInput' onClick={onClick}>Buscar</button>
                   </form>
+              </div>
+              <div className='text-center pt-4'>
+                { error != undefined ? (<span className='text-red-500'>Erro ao buscar dados</span>): null }
               </div>
           </div>
     </main>
